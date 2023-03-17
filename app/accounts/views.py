@@ -17,15 +17,13 @@ class LoginView(TemplateView):
 
    def post(self, request, *args, **kwargs):
        form = self.form(request.POST)
-       print(request.POST, 'post')
-       print(request.GET, 'get')
        if not form.is_valid():
-           return redirect('projects_list')
+           return redirect('login')
        username = form.cleaned_data.get('username')
        password = form.cleaned_data.get('password')
        user = authenticate(request, username=username, password=password)
        if not user:
-           return redirect('projects_list')
+           return redirect('login')
        login(request, user)
        next = request.GET.get('next')
        if next:

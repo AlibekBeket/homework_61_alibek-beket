@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
 
@@ -18,7 +19,7 @@ class ProjectListView(ListView):
         return context
 
 
-class ProjectAddView(CreateView):
+class ProjectAddView(LoginRequiredMixin, CreateView):
     template_name = 'project_create_page.html'
     model = Project
     form_class = ProjectForm
@@ -27,7 +28,7 @@ class ProjectAddView(CreateView):
         return reverse('projects_list')
 
 
-class ProjectDeleteView(DeleteView):
+class ProjectDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'project_delete_page.html'
     model = Project
     success_url = reverse_lazy('projects_list')

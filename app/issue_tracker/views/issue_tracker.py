@@ -88,8 +88,8 @@ class IssueAddView(LoginRequiredMixin, CreateView):
             issue = form.save()
             issue.project = Project.objects.get(id=kwargs['project_pk'])
             issue.save()
-            return reverse('project_issue_detail', kwargs={'project_pk': issue.project.id, 'pk': issue.pk})
-        return render(request, 'issue_create_page.html', context={'form': form})
+            return redirect(reverse('project_issue_detail', kwargs={'project_pk': issue.project.pk, 'pk': issue.pk}))
+        return render(request, 'issue_create_page.html', context={'form': form, 'project': Project.objects.get(id=kwargs['project_pk'])})
 
 
 class IssueDeleteView(LoginRequiredMixin, DeleteView):
